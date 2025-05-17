@@ -13,6 +13,7 @@ type Server struct {
 	MyServer *http.Server
 }
 
+// InitiateServer создает сервер и логгер.
 func InitiateServer(myLogger *log.Logger) *Server {
 	router := http.NewServeMux()
 	router.HandleFunc("/", handlers.IndexHanlder)
