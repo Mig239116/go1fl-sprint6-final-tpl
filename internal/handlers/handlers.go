@@ -17,12 +17,18 @@ func IndexHanlder(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, fmt.Sprintf("Сервер не поддерживает %s запросы", req.Method), http.StatusMethodNotAllowed)
 		return
 	}
-	htmlContent, err := os.ReadFile(IndexPath)
+	absPath, err := filepath.Abs(IndexPath)
+    if err != nil {
+        http.Error(w, "Internal server error", http.StatusInternalServerError)
+        return
+    }
+	htmlContent, err := os.ReadFile(absPath)
 	if err != nil {
 		http.Error(w, "Could not read HTML file", http.StatusInternalServerError)
 		return
 	}
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.WriteHeader(http.StatusOK) 
 	w.Write(htmlContent)
 }
 
