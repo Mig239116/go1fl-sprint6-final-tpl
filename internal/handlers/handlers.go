@@ -14,7 +14,7 @@ const IndexPath = "../index.html"
 
 func IndexHanlder(w http.ResponseWriter, req *http.Request) {
 	if req.Method != http.MethodGet {
-		http.Error(w, fmt.Sprintf("Сервер не поддерживает %s запросы", req.Method), http.StatusMethodNotAllowed)
+		http.Error(w, fmt.Sprintf("Сервер не поддерживает %s запросы", req.Method), http.StatusInternalServerError)
 		return
 	}
 	absPath, err := filepath.Abs(IndexPath)
@@ -34,18 +34,18 @@ func IndexHanlder(w http.ResponseWriter, req *http.Request) {
 
 func UploadHandler(w http.ResponseWriter, req *http.Request) {
 	if req.Method != http.MethodPost {
-		http.Error(w, fmt.Sprintf("Сервер не поддерживает %s запросы", req.Method), http.StatusMethodNotAllowed)
+		http.Error(w, fmt.Sprintf("Сервер не поддерживает %s запросы", req.Method), http.StatusInternalServerError)
 		return
 	}
 	file, header, err := req.FormFile("myFile")
 	if err != nil {
-		http.Error(w, "Cant get the file", http.StatusBadRequest)
+		http.Error(w, "Cant get the file", http.StatusInternalServerError)
 		return
 	}
 	defer file.Close()
 	data, err := os.ReadFile("../" + header.Filename)
 	if err != nil {
-		http.Error(w, "Failed to read the file", http.StatusBadRequest)
+		http.Error(w, "Failed to read the file", http.StatusInternalServerError)
 		return
 	}
 	text := string(data)
