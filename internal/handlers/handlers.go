@@ -2,18 +2,19 @@ package handlers
 
 import (
 	"fmt"
+	"io"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 	"time"
-	"io"
 
 	"github.com/Yandex-Practicum/go1fl-sprint6-final/internal/service"
 )
 
-const IndexPath = "../index.html"
+const IndexPath = "./index.html"
 
-func IndexHanlder(w http.ResponseWriter, req *http.Request) {
+func IndexHandler(w http.ResponseWriter, req *http.Request) {
 	if req.Method != http.MethodGet {
 		http.Error(w, fmt.Sprintf("Сервер не поддерживает %s запросы", req.Method), http.StatusInternalServerError)
 		return
@@ -29,7 +30,6 @@ func IndexHanlder(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	w.WriteHeader(http.StatusOK) 
 	w.Write(htmlContent)
 }
 
