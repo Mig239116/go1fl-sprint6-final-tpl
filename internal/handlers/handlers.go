@@ -27,7 +27,7 @@ func IndexHanlder(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, "Could not read HTML file", http.StatusInternalServerError)
 		return
 	}
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.Header().Set("Content-Type", "text/html")
 	w.WriteHeader(http.StatusOK) 
 	w.Write(htmlContent)
 }
