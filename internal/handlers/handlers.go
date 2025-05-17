@@ -27,7 +27,7 @@ func IndexHanlder(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, "Could not read HTML file", http.StatusInternalServerError)
 		return
 	}
-	w.Header().Set("Content-Type", "text/html")
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.WriteHeader(http.StatusOK) 
 	w.Write(htmlContent)
 }
@@ -66,7 +66,7 @@ func UploadHandler(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, "Failed to write result to file", http.StatusInternalServerError)
 		return
 	}
-	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprint(w, newText)
 }
