@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"time"
+	"io"
 
 	"github.com/Yandex-Practicum/go1fl-sprint6-final/internal/service"
 )
@@ -37,13 +38,14 @@ func UploadHandler(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, fmt.Sprintf("Сервер не поддерживает %s запросы", req.Method), http.StatusInternalServerError)
 		return
 	}
-	file, header, err := req.FormFile("myFile")
+	file, _, err := req.FormFile("myFile")
 	if err != nil {
 		http.Error(w, "Cant get the file", http.StatusInternalServerError)
 		return
 	}
 	defer file.Close()
-	data, err := os.ReadFile("../" + header.Filename)
+
+	data, err := io.ReadAll(file)
 	if err != nil {
 		http.Error(w, "Failed to read the file", http.StatusInternalServerError)
 		return
